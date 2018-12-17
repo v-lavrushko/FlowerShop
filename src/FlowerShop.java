@@ -13,6 +13,14 @@ public class FlowerShop {
         for (int i = 0; i < 25; i++) {
             ocean_of_tulips[i] = new Tulip(Tulip.avalible_colors[i % 5], 1.5);
         }
+        this.dafault_bouquets[2] = new Bouquet(ocean_of_tulips);
+    }
 
+    public Bouquet custom_bouquet(Flower flowers[]) {
+        return new Bouquet(flowers);
+    }
+
+    public double buy(Bouquet bouquet) {
+        return bouquet.price();
     }
 }
