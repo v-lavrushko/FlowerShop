@@ -21,4 +21,26 @@ class FlowerColors {
                 return new String[0];
         }
     }
+
+    public String toString(String flowertype) {
+        String str = "";
+        switch (flowertype) {
+            case "Rose":
+                for (String color: roseAvalibleColors) {
+                    str = str.concat(color);
+                }
+                break;
+            case "Tulip":
+                for (String color: tulipAvalibleColors) {
+                    str = str.concat(color);
+                }
+                break;
+            case "Violet":
+                for (String color: violetAvalibleColors) {
+                    str = str.concat(color);
+                }
+                break;
+        }
+        return str;
+    }
 }

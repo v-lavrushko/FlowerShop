@@ -2,7 +2,8 @@ import java.util.*;
 
 public class Main {
 
-    static void customBouquet() {
+    static Flower[] customFlowers() {
+        return new Flower[1];
     }
 
     public static void main(String[] args) {
@@ -34,7 +35,8 @@ public class Main {
                 System.out.printf("That will be %f $, sweetheart", ryb.getPrice());
                 return;
             case "custom":
-                customBouquet();
+                Bouquet custom = flowerShop.create_custom(customFlowers());
+                System.out.printf("That will be %f $, sweetheart", ryb.getPrice());
                 return;
             default:
                 System.out.println("Sorry, I didn't get it");

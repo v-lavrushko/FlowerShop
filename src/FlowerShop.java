@@ -26,7 +26,7 @@ public class FlowerShop {
         return new Bouquet(oneHundredOneroses);
     }
 
-    public Bouquet custom_bouquet(Flower flowers[]) {
+    public Bouquet create_custom(Flower flowers[]) {
         return new Bouquet(flowers);
     }
 
