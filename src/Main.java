@@ -2,8 +2,30 @@ import java.util.*;
 
 public class Main {
 
-    static Flower[] customFlowers() {
-        return new Flower[1];
+    static Flower[] customFlowers(Scanner input) {
+        ArrayList<Flower> flowers = new ArrayList<Flower>();
+        String flower = "";
+        do {
+            System.out.println("\tWhat flower do you want?\n\t(name, color, special attributes)");
+            flower = input.next().toLowerCase();
+            String color = input.next();
+            String[] attributes = input.nextLine().split(" ");
+            switch (flower) {
+                case "rose":
+                    flowers.add(new Rose(color, 2, attributes));
+                    continue;
+                case "tulip":
+                    flowers.add(new Tulip(color, 1.55, attributes));
+                    continue;
+                case "violet":
+                    flowers.add(new Violet(color, 1.25, attributes));
+                    continue;
+                default:
+            }
+        } while (!flower.equals(""));
+        Flower[] flowersarr = new Flower[flowers.size()];
+        flowersarr = flowers.toArray(flowersarr);
+        return flowersarr;
     }
 
     public static void main(String[] args) {
@@ -35,7 +57,7 @@ public class Main {
                 System.out.printf("That will be %f $, sweetheart", ryb.getPrice());
                 return;
             case "custom":
-                Bouquet custom = flowerShop.create_custom(customFlowers());
+                Bouquet custom = flowerShop.create_custom(customFlowers(input));
                 System.out.printf("That will be %f $, sweetheart", ryb.getPrice());
                 return;
             default:
