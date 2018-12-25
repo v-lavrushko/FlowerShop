@@ -13,16 +13,18 @@ public class Main {
             switch (flower) {
                 case "rose":
                     flowers.add(new Rose(color, 2, attributes));
-                    continue;
+                    break;
                 case "tulip":
                     flowers.add(new Tulip(color, 1.55, attributes));
-                    continue;
+                    break;
                 case "violet":
                     flowers.add(new Violet(color, 1.25, attributes));
-                    continue;
+                    break;
                 default:
+                    break;
             }
-        } while (!flower.equals(""));
+            System.out.println(flower);
+        } while (!flower.equals("done"));
         Flower[] flowersarr = new Flower[flowers.size()];
         flowersarr = flowers.toArray(flowersarr);
         return flowersarr;
@@ -41,27 +43,44 @@ public class Main {
         System.out.println("\tOr do you want a custom one?\n");
         Scanner input = new Scanner(System.in);
         String order = input.next().toLowerCase();
+        Bouquet buyingBouquet;
         switch (order) {
             case "101 roses":
             case "101":
             case "roses":
-                System.out.printf("That will be %f $, sweetheart", oneOOneRoses.getPrice());
-                return;
+                buyingBouquet = oneOOneRoses;
+                break;
             case "ocean of tulips":
             case "ocean":
             case "tulips":
-                System.out.printf("That will be %f $, sweetheart", oceanOfTulips.getPrice());
-                return;
+                buyingBouquet = oceanOfTulips;
+                break;
             case "ryb":
             case "red yellow blue":
-                System.out.printf("That will be %f $, sweetheart", ryb.getPrice());
-                return;
+                buyingBouquet = ryb;
+                break;
             case "custom":
-                Bouquet custom = flowerShop.create_custom(customFlowers(input));
-                System.out.printf("That will be %f $, sweetheart", ryb.getPrice());
-                return;
+                buyingBouquet = flowerShop.create_custom(customFlowers(input));
+                System.out.println(buyingBouquet.toString());
+                break;
             default:
                 System.out.println("Sorry, I didn't get it");
+                return;
         }
+        System.out.println("Cash or Card?");
+        String answer = input.next().toLowerCase();
+        PayingMethod payingMethod;
+        switch (answer) {
+            case "cash":
+                payingMethod = new PayingMethod(new CashPayment());
+                break;
+            case "card":
+                payingMethod = new PayingMethod(new CardPayment());
+                break;
+                default:
+                    System.out.println("Sorry, I didn't get it");
+                    return;
+        }
+        payingMethod.pay(buyingBouquet.getPrice());
     }
 }
