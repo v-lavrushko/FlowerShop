@@ -2,71 +2,32 @@ import java.util.*;
 
 public class Main {
 
-    static Flower[] customFlowers(Scanner input) {
-        ArrayList<Flower> flowers = new ArrayList<Flower>();
-        String flower = "";
-        do {
-            System.out.println("\tWhat flower do you want?\n\t(name, color, special attributes)");
-            flower = input.next().toLowerCase();
-            String color = input.next();
-            String[] attributes = input.nextLine().split(" ");
-            switch (flower) {
-                case "rose":
-                    flowers.add(new Rose(color, 2, attributes));
-                    break;
-                case "tulip":
-                    flowers.add(new Tulip(color, 1.55, attributes));
-                    break;
-                case "violet":
-                    flowers.add(new Violet(color, 1.25, attributes));
-                    break;
-                default:
-                    break;
-            }
-            System.out.println(flower);
-        } while (!flower.equals("done"));
-        Flower[] flowersarr = new Flower[flowers.size()];
-        flowersarr = flowers.toArray(flowersarr);
-        return flowersarr;
-    }
+    /*To buy a formed bouquet, just enter it's name.
+    * For a custom one, just enter word "custom" and
+    * type wanted flowers with colors and special attributes.
+    * To end creating custom bouquet enter "done custom"*/
 
     public static void main(String[] args) {
         FlowerShop flowerShop = new FlowerShop();
+
+        Map<String, Bouquet> formedBouquets= new HashMap<>();
         System.out.println("\tWhat do you want, dear?");
+
         System.out.println("\tAlready formed bouquets:");
-        Bouquet oneOOneRoses = flowerShop.create101Roses();
-        System.out.printf("\t\"101 roses\":\n%s", oneOOneRoses.toString());
-        Bouquet oceanOfTulips = flowerShop.createOceanOfTulips();
-        System.out.printf("\t\"Ocean of tulips\":\n%s", oceanOfTulips.toString());
-        Bouquet ryb = flowerShop.createRyb();
-        System.out.printf("\t\"Red Yellow Blue\":\n%s", ryb.toString());
+        formedBouquets.put("101roses", flowerShop.create101Roses());
+        System.out.printf("\t\"101 roses\":\n%s", formedBouquets.get("101roses").toString());
+        formedBouquets.put("oceanOfTulips", flowerShop.createOceanOfTulips());
+        System.out.printf("\t\"Ocean of Tulips\":\n%s", formedBouquets.get("oceanOfTulips").toString());
+        formedBouquets.put("RedYellowBlue", flowerShop.createRyb());
+        System.out.printf("\t\"Red Yellow Blue\":\n%s", formedBouquets.get("RedYellowBlue").toString());
         System.out.println("\tOr do you want a custom one?\n");
+
         Scanner input = new Scanner(System.in);
         String order = input.next().toLowerCase();
-        Bouquet buyingBouquet;
-        switch (order) {
-            case "101 roses":
-            case "101":
-            case "roses":
-                buyingBouquet = oneOOneRoses;
-                break;
-            case "ocean of tulips":
-            case "ocean":
-            case "tulips":
-                buyingBouquet = oceanOfTulips;
-                break;
-            case "ryb":
-            case "red yellow blue":
-                buyingBouquet = ryb;
-                break;
-            case "custom":
-                buyingBouquet = flowerShop.create_custom(customFlowers(input));
-                System.out.println(buyingBouquet.toString());
-                break;
-            default:
-                System.out.println("Sorry, I didn't get it");
-                return;
-        }
+
+        ShoppingCart shoppingCart = new CustomBouquetCart(new FormedBouquetCart(formedBouquets), flowerShop);
+        Bouquet buyingBouquet = shoppingCart.chooseBouquet(order);
+
         System.out.println("Cash or Card?");
         String answer = input.next().toLowerCase();
         PayingMethod payingMethod;
